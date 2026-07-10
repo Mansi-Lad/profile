@@ -20,7 +20,7 @@ Data Engineer with expertise in Big Data Analytics, Data Pipeline Development, a
 
 ## Professional Experience
 
-### Associate Data Engineer
+### Data Engineer
 **Jio Platforms Limited** | Bangalore, Karnataka  
 *August 2022 – Present*
 

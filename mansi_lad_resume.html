@@ -64,46 +64,57 @@
             opacity: 0.9;
         }
 
-        /* Centered Header Layout (Single Column) */
+        /* Left-Aligned Header with 2x2 Contact Grid */
         header {
-            text-align: center;
-            margin-bottom: 12px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 8px;
+            text-align: left;
+            margin-bottom: 8px;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
             color: var(--primary);
             letter-spacing: -0.04em;
             margin-bottom: 3px;
+            line-height: 1.1;
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
-        .contact-bar {
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 6px 30px;
+            font-size: 14px;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .contact-item {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 5px 12px;
-            font-size: 15px;
-            color: var(--text-light);
+            gap: 5px;
         }
 
-        .contact-bar a {
-            color: var(--text-light);
+        .contact-item strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .contact-item a {
+            color: var(--text);
             text-decoration: none;
         }
 
-        .contact-bar a:hover {
+        .contact-item a:hover {
             color: var(--accent);
         }
 
@@ -268,17 +279,20 @@
 
         <header>
             <h1>Mansi Lad</h1>
-            <div class="subtitle">Data Engineer</div>
-            <div class="contact-bar">
-                <a href="mailto:mansiklad@gmail.com">mansiklad@gmail.com</a>
-                <span>•</span>
-                <span>+91 8780117468</span>
-                <span>•</span>
-                <span>Bangalore, India</span>
-                <span>•</span>
-                <a href="https://linkedin.com/in/manulad246" target="_blank">linkedin.com/in/manulad246</a>
-                <span>•</span>
-                <a href="https://mansi-lad.github.io/profile/" target="_blank">mansi-lad.github.io/profile</a>
+            <div class="subtitle">Data Engineer &nbsp;•&nbsp; Bangalore, India</div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <strong>Email:</strong> <a href="mailto:mansiklad@gmail.com">mansiklad@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Phone:</strong> +91 8780117468
+                </div>
+                <div class="contact-item">
+                    <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/manulad246" target="_blank">linkedin.com/in/manulad246</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Portfolio:</strong> <a href="https://mansi-lad.github.io/profile/" target="_blank">mansi-lad.github.io/profile</a>
+                </div>
             </div>
         </header>
 
@@ -312,7 +326,7 @@
             <div class="job">
                 <div class="job-header">
                     <div class="job-title-company">
-                        Associate Data Engineer — <span class="company-name">Jio Platforms Limited</span>
+                        Data Engineer — <span class="company-name">Jio Platforms Limited</span>
                     </div>
                     <div class="job-meta">Aug 2022 – Present | Bangalore, India</div>
                 </div>
