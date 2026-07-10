@@ -494,14 +494,21 @@
         @media (max-width: 900px) {
             header {
                 padding: 15px 0;
+                position: static; /* Turn off sticky on mobile to avoid overlap */
+                backdrop-filter: none;
+                background: var(--bg-light);
             }
             .header-content {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
                 text-align: center;
+                align-items: center;
             }
             nav {
-                gap: 18px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px 18px;
             }
             .hero-section {
                 grid-template-columns: 1fr;
@@ -524,15 +531,22 @@
             }
             .journey-header {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center; /* Center align experience header on mobile */
+                text-align: center;
                 gap: 8px;
             }
             .journey-duration {
-                text-align: left;
+                text-align: center;
+            }
+            .journey-bullets {
+                text-align: left; /* Keep bullets left-aligned for readability */
             }
         }
 
         @media (max-width: 600px) {
+            .container {
+                padding: 0 16px; /* Proper mobile margins on sides */
+            }
             .hero-text h1 {
                 font-size: 32px;
             }
@@ -541,10 +555,19 @@
                 margin-bottom: 20px;
             }
             .contact-grid {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Center contacts */
+                text-align: center;
+                width: 100%;
                 gap: 8px;
-                text-align: left;
-                width: fit-content;
+                margin-bottom: 25px;
+            }
+            .contact-item {
+                justify-content: center;
+            }
+            .hero-text .btn {
+                margin: 0 auto; /* Center button */
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
