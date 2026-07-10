@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mansi Lad | Data Engineer Portfolio</title>
+    <meta name="description" content="Professional portfolio of Mansi Lad, Data Engineer specializing in Big Data, Spark, Scala, Azure, and Databricks.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-light: #fafaf9; /* Warm stone off-white */
+            --bg-gradient-end: #f5f5f4;
+            --card-bg: #ffffff;
+            --white: #ffffff; /* Explicitly defined white */
+            --border-color: rgba(159, 18, 57, 0.08); /* Soft rose border */
+            --accent-rose: #9f1239; /* Deep Rose / Burgundy */
+            --accent-gold: #b45309; /* Warm Gold */
+            --text-primary: #1c1917; /* Warm Dark Charcoal */
+            --text-secondary: #57534e; /* Warm Slate */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Reactive Canvas Background representing Data Pipelines (Styled softly for Light Theme) */
+        #pipeline-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Navigation */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(250, 250, 249, 0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--accent-rose);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-rose);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 80px 0 50px 0;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-display);
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--accent-rose) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-tagline {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .contact-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-rose);
+        }
+
+        /* Hero Right Column (Clean Pipeline monitor card) */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .pipeline-hub-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 10px 25px -15px rgba(159, 18, 57, 0.1);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .pipeline-hub-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(159, 18, 57, 0.25);
+        }
+
+        .hub-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-rose);
+            margin-bottom: 12px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .pipeline-status-list {
+            text-align: left;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .pipeline-status-list li {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+            padding-bottom: 4px;
+        }
+
+        .status-active {
+            color: var(--accent-rose);
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            margin-bottom: 60px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px -5px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px -10px rgba(159, 18, 57, 0.15);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-rose);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1.5px;
+            background: var(--border-color);
+        }
+
+        /* Skills Layout */
+        .skills-section {
+            margin-bottom: 60px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .skills-category {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px -5px rgba(0,0,0,0.05);
+        }
+
+        .skills-category h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-rose);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: rgba(159, 18, 57, 0.04);
+            border: 1px solid rgba(159, 18, 57, 0.12);
+            color: var(--accent-rose);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(159, 18, 57, 0.08);
+            border-color: var(--accent-rose);
+        }
+
+        /* Journey / Experience Section */
+        .journey-section {
+            margin-bottom: 60px;
+        }
+
+        .timeline-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px -5px rgba(0,0,0,0.05);
+        }
+
+        .journey-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .journey-role {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .journey-role span {
+            color: var(--accent-rose);
+        }
+
+        .journey-duration {
+            font-size: 14px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .journey-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .journey-bullets li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 14.5px;
+            color: var(--text-secondary);
+        }
+
+        .journey-bullets li strong {
+            color: var(--accent-rose);
+        }
+
+        .journey-bullets li::before {
+            content: "▪";
+            position: absolute;
+            left: 2px;
+            color: var(--accent-rose);
+            font-size: 12px;
+            top: 0.5px;
+        }
+
+        /* Education & Certs Split Layout */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .edu-list, .certs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .edu-card, .cert-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px -5px rgba(0,0,0,0.05);
+            transition: border-color 0.3s;
+        }
+
+        .edu-card:hover, .cert-card:hover {
+            border-color: rgba(159, 18, 57, 0.25);
+        }
+
+        .edu-degree, .cert-title {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .edu-school, .cert-issuer {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .edu-school span, .cert-issuer span {
+            color: var(--accent-rose);
+            font-weight: 600;
+        }
+
+        /* Call To Action (Download Resume) */
+        .cta-section {
+            text-align: center;
+            padding: 50px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(159, 18, 57, 0.01) 100%);
+            border-top: 1.5px solid var(--border-color);
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-text {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-rose);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 28px;
+            font-size: 14.5px;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--accent-rose);
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-visual {
+                order: -1;
+            }
+            .contact-grid {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .split-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-text h1 {
+                font-size: 38px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Data Pipeline Particle Network Background (Styled softly for Light Theme) -->
+    <canvas id="pipeline-canvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Mansi<span>Lad</span></div>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section id="about" class="hero-section">
+            <div class="hero-text">
+                <h1>Hi, I'm Mansi Lad<br><span>Data Engineer</span></h1>
+                <p class="hero-tagline">
+                    I design, build, and optimize high-throughput data processing workflows and cloud-native database pipelines, transforming raw data streams into reliable business intelligence at scale.
+                </p>
+                <div class="contact-grid">
+                    <div class="contact-item">📧 <a href="mailto:mansiklad@gmail.com">mansiklad@gmail.com</a></div>
+                    <div class="contact-item">📍 Bangalore, India</div>
+                    <div class="contact-item">📞 +91 8780117468</div>
+                    <div class="contact-item">🔗 <a href="https://linkedin.com/in/manulad246" target="_blank">linkedin.com/in/manulad246</a></div>
+                </div>
+                <a href="mansi_lad_resume.html" target="_blank" class="btn">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 6px; display: inline-block; vertical-align: middle;">
+                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                    </svg>
+                    View Resume
+                </a>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="pipeline-hub-card">
+                    <div class="hub-title">Pipeline Monitor</div>
+                    <ul class="pipeline-status-list">
+                        <li><span>CDP Migration (6.2)</span> <span class="status-active">100% OK</span></li>
+                        <li><span>Spark Processing (Scala)</span> <span class="status-active">Active</span></li>
+                        <li><span>Ingestion Rate (Kafka)</span> <span class="status-active">Real-time</span></li>
+                        <li><span>YARN Allocation</span> <span class="status-active">Optimized</span></li>
+                        <li><span>ADLS / Databricks Sync</span> <span class="status-active">Synced</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">35%</div>
+                    <div class="stat-label">Job Execution Time Saved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2x</div>
+                    <div class="stat-label">Faster Query Execution</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Lower Query Latency</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="skills-grid">
+                <div class="skills-category">
+                    <h3>Programming & Core</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Scala</span>
+                        <span class="skill-tag">PySpark</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Shell Scripting</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Big Data & Streaming</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Apache Spark</span>
+                        <span class="skill-tag">Apache Kafka</span>
+                        <span class="skill-tag">Apache NiFi</span>
+                        <span class="skill-tag">Hive</span>
+                        <span class="skill-tag">HDFS</span>
+                        <span class="skill-tag">Airflow</span>
+                        <span class="skill-tag">Data Modeling</span>
+                        <span class="skill-tag">Job Tuning</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Cloud & Warehousing</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Microsoft Azure</span>
+                        <span class="skill-tag">Databricks</span>
+                        <span class="skill-tag">Delta Lake</span>
+                        <span class="skill-tag">ADLS Gen2</span>
+                        <span class="skill-tag">Azure Data Factory</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Platforms & DevOps</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Cloudera (CDP)</span>
+                        <span class="skill-tag">Hortonworks (HDP)</span>
+                        <span class="skill-tag">YARN Resource Tuning</span>
+                        <span class="skill-tag">CI/CD Pipelines</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience / Journey Section -->
+        <section id="experience" class="journey-section">
+            <h2 class="section-title">Professional Journey</h2>
+            <div class="timeline-card">
+                <div class="journey-header">
+                    <div>
+                        <div class="journey-role">Associate Data Engineer @ <span>Jio Platforms</span></div>
+                        <div style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px;">Platform Migration & Ingestion Automation</div>
+                    </div>
+                    <div class="journey-duration">
+                        <div>Aug 2022 – Present</div>
+                        <div style="font-size: 12.5px; font-weight: 500; opacity: 0.8;">Bangalore, India</div>
+                    </div>
+                </div>
+                <ul class="journey-bullets">
+                    <li>Led the migration from Hortonworks (HDP 2.6.5) to Cloudera (CDP 6.2), resolving 2 critical Cloudera compatibility issues and ensuring <strong>100% data consistency</strong>. Optimized YARN resources to **reduce job execution time by 35%**.</li>
+                    <li>Designed an automated Oracle GoldenGate-to-HDFS pipeline for JioMerchant, **improving KPI computation efficiency** and reducing manual data processing time from <strong>2 hours to 15 minutes</strong> via Spark batch transformations.</li>
+                    <li>Engineered an optimized Spark event-driven data processing framework using Kafka and Airflow to automate cohort processing.</li>
+                    <li>Developed 9+ scalable ETL pipelines for Metro retail data ingestion using Apache Spark and Kafka, enabling <strong>2x faster query execution</strong> and <strong>40% lower query latency</strong> via partitioning.</li>
+                    <li>Led device data ingestion pipelines consuming HiveMQTT telemetry streams via Kafka into HDFS to power downstream KPI analytics.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Education & Certifications Split -->
+        <div class="split-section">
+            <section id="education">
+                <h2 class="section-title">Education</h2>
+                <div class="edu-list">
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <div class="edu-degree">PG Diploma in Big Data Analytics</div>
+                            <div class="edu-date">2021 – 2022</div>
+                        </div>
+                        <div class="edu-school">CDAC – Sunbeam Institute, <span>Pune</span></div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <div class="edu-degree">Master of Engineering — Signal Processing</div>
+                            <div class="edu-date">2014 – 2016</div>
+                        </div>
+                        <div class="edu-school">S.N. Patel Institute of Research & Tech, <span>Bardoli</span> (CGPA: 8.23)</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <div class="edu-degree">Bachelor of Engineering — Electronics & Comm.</div>
+                            <div class="edu-date">2010 – 2014</div>
+                        </div>
+                        <div class="edu-school">Government Engineering College, <span>Bharuch</span> (CGPA: 7.12)</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="certifications">
+                <h2 class="section-title">Certifications</h2>
+                <div class="certs-list">
+                    <div class="cert-card">
+                        <div class="cert-title">Azure Data Engineering Associate</div>
+                        <div class="cert-issuer">Microsoft Certified via <span>Coursera</span></div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-title">Data Ingestion with Lakeflow Connect</div>
+                        <div class="cert-issuer">Certified by <span>Databricks</span></div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-title">Lakeflow Spark Declarative Pipelines</div>
+                        <div class="cert-issuer">Certified by <span>Databricks</span></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Call To Action -->
+        <section class="cta-section">
+            <h2 class="cta-title">Let's build reliable data systems</h2>
+            <p class="cta-text">
+                I am open to data engineering roles where I can design high-performance pipelines, optimize cloud resource usage, and solve complex big data integration challenges.
+            </p>
+            <a href="mailto:mansiklad@gmail.com" class="btn" style="margin-right: 15px;">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 6px; display: inline-block; vertical-align: middle;">
+                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-.239-.756Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                </svg>
+                Get in Touch
+            </a>
+            <a href="mansi_lad_resume.html" target="_blank" class="btn" style="background: transparent; border: 1px solid var(--accent-rose); color: var(--accent-rose);">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 6px; display: inline-block; vertical-align: middle;">
+                    <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                </svg>
+                Download Resume
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Mansi Lad. All rights reserved. | Built as a premium Data Engineering showcase.</p>
+    </footer>
+
+    <!-- Interactive Particle Constellation Data Pipeline Script -->
+    <script>
+        const canvas = document.getElementById('pipeline-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const colors = ['rgba(159, 18, 57, 0.12)', 'rgba(180, 83, 9, 0.12)', 'rgba(28, 25, 23, 0.08)']; // Soft rose, gold, and stone grey
+
+        // Mouse coordinates
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 120
+        };
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.addEventListener('mouseout', function() {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Resize Canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Particle Class representing nodes in a pipeline
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+                this.baseSize = size;
+            }
+
+            // Draw individual node
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            // Update particle position & handle boundary / mouse repel
+            update() {
+                // Bounce from canvas edges
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+
+                // Check distance with mouse to repel
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        // Repel vector calculation
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        
+                        // Push away from mouse
+                        this.x -= forceDirectionX * 2.5;
+                        this.y -= forceDirectionY * 2.5;
+                    }
+                }
+
+                // Normal drift movement representing data flow
+                this.x += this.directionX;
+                this.y += this.directionY;
+
+                this.draw();
+            }
+        }
+
+        // Initialize node particles
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 38000;
+            numberOfParticles = Math.min(Math.max(numberOfParticles, 25), 45); // Limit density
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1.5;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.3) - 0.15;
+                let directionY = (Math.random() * 0.3) - 0.15;
+                let color = colors[Math.floor(Math.random() * colors.length)];
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Connect nodes to simulate pipeline data lines
+        function connectNodes() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a + 1; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 140) {
+                        // Dynamic opacity based on proximity
+                        opacityValue = 1 - (distance / 140);
+                        ctx.strokeStyle = `rgba(159, 18, 57, ${opacityValue * 0.05})`; // Very soft rose line
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connectNodes();
+        }
+
+        init();
+        animate();
+    </script>
+
+</body>
+</html>
